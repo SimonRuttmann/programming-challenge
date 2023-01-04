@@ -16,6 +16,14 @@ public final class App {
 
         // Your preparation code …
 
+        /**
+         * IParser p = new CsvWeatherParser("someFile")
+         * Dataclass d = p.parse()
+         *
+         * res = SmallestTempCalc.calc(d)
+         * sout(res)
+         */
+
         String dayWithSmallestTempSpread = "Someday";     // Your day analysis function call …
         System.out.printf("Day with smallest temperature spread : %s%n", dayWithSmallestTempSpread);
 
