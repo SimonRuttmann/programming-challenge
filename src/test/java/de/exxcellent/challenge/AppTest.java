@@ -37,6 +37,9 @@ class AppTest {
     private final List<String> schemaFootball = Arrays.asList("Team","Games","Wins","Losses","Draws","Goals","Goals Allowed","Points");
     private final List<String> firstFootballRow = Arrays.asList("Arsenal","38","26","9","3","79","36","87");
 
+
+    // CsvReader tests
+
     @Test
     void CsvReaderTestHappyPath() throws IOException {
         var weatherContent = (CsvContent) new CsvFileReader().read("src/test/resources/csv/weather_valid.csv");
@@ -52,8 +55,11 @@ class AppTest {
                 "Value on row 2 is missing, but no exception thrown");
     }
 
+
+    // CsvWeatherParser mapping tests
+
     @Test
-    void CsVMapperTestHappyPath() throws IOException {
+    void CsVMapperTestWeatherHappyPath() throws IOException {
 
         var rawCsvContent = new CsvContent();
         rawCsvContent.setSchema(schemaWeather);
@@ -73,7 +79,34 @@ class AppTest {
         assertEquals(correctWeatherReport.getMaxTemperature(), parsedWeatherReport.getMaxTemperature());
         assertEquals(correctWeatherReport.getMinTemperature(), parsedWeatherReport.getMinTemperature());
 
+    }
 
+    @Test
+    void CsVMapperTestWeatherExceptionPath() {
+
+        var rawCsvContent = new CsvContent();
+        var invalidWeatherSchema = schemaWeather.stream().
+                filter(schemaEntry -> !schemaEntry.equals("MnT")).
+                collect(Collectors.toList());
+
+        rawCsvContent.setSchema(invalidWeatherSchema);
+        rawCsvContent.addRow(0, firstWeatherRow);
+
+        CsvWeatherParser weatherParserMock = new CsvWeatherParser(){
+            public MonthlyWeatherReport parse(String dummy){
+                return this.mapToClass(rawCsvContent);
+            }
+        };
+
+        assertThrows(CsvParserException.class, () ->  weatherParserMock.parse(""));
+    }
+
+    // CsvFootballParser mapping tests
+
+    @Test
+    void CsVMapperTestFootballHappyPath() throws IOException {
+
+        var rawCsvContent = new CsvContent();
         rawCsvContent.setSchema(schemaFootball);
         rawCsvContent.addRow(0, firstFootballRow);
 
@@ -92,26 +125,11 @@ class AppTest {
         assertEquals(correctFootballTeam.getGoals(), parsedFootballTeam.getGoals());
     }
 
+
     @Test
-    void CsVMapperTestExceptionPath() {
+    void CsVMapperTestFootballExceptionPath() {
 
         var rawCsvContent = new CsvContent();
-        var invalidWeatherSchema = schemaWeather.stream().
-                filter(schemaEntry -> !schemaEntry.equals("MnT")).
-                collect(Collectors.toList());
-
-        rawCsvContent.setSchema(invalidWeatherSchema);
-        rawCsvContent.addRow(0, firstWeatherRow);
-
-        CsvWeatherParser weatherParserMock = new CsvWeatherParser(){
-            public MonthlyWeatherReport parse(String dummy){
-                return this.mapToClass(rawCsvContent);
-            }
-        };
-
-        assertThrows(CsvParserException.class, () ->  weatherParserMock.parse(""));
-
-
         var invalidFootballSchema = schemaFootball.stream().
                 filter(footballSchema -> !footballSchema.equals("Goals Allowed")).
                 collect(Collectors.toList());
@@ -126,8 +144,10 @@ class AppTest {
         };
 
         assertThrows(CsvParserException.class, () ->  footballParserMock.parse(""));
-
     }
+
+
+    //Minimum-Difference tests
 
     @Test
     void MinimumDifferenceAlgorithmTestHappyPath() {
@@ -141,8 +161,12 @@ class AppTest {
     @Test
     void MinimumDifferenceAlgorithmTestExceptionPath(){
         var emptyPairs = new ArrayList<Pair<Integer, Integer>>();
-        assertThrows(IllegalArgumentException.class, () -> new MinimumDifference().calcMinimumDifference(emptyPairs));
+        assertThrows(IllegalArgumentException.class,
+                () -> new MinimumDifference().calcMinimumDifference(emptyPairs));
     }
+
+
+    // Calculator tests
 
     @Test
     void SmallestTemperatureSpreadTest(){
