@@ -9,7 +9,8 @@ import java.util.stream.Collectors;
 public class SmallestTemperatureSpreadCalculator {
 
     /**
-     * Calculates the minimum of (MxT-MnT) for each DailyWeatherReport and returns the day of this weather report
+     * Calculates the minimum of max - min temperature
+     * for each DailyWeatherReport and returns the day of this weather report
      */
     public String resolveDayWithSmallestTemperatureSpread(MonthlyWeatherReport monthlyWeatherReport){
 

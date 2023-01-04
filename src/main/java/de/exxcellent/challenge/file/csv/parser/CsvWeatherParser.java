@@ -7,7 +7,7 @@ import de.exxcellent.challenge.file.csv.reader.CsvContent;
 import static de.exxcellent.challenge.file.csv.parser.CsvUtil.getIndexOrThrow;
 
 /**
- * Impl of IParser, uses CsvFileReader
+ * Implementation of IParser. Contains logic to create a MonthlyWeatherReport from a csv file
  */
 public class CsvWeatherParser extends AbstractCsvParser<MonthlyWeatherReport> {
 

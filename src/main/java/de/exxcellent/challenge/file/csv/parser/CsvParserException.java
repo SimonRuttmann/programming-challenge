@@ -1,5 +1,8 @@
 package de.exxcellent.challenge.file.csv.parser;
 
+/**
+ * Thrown by the IParser implementations, indicates that a csv file misses a required schema definition
+ */
 public class CsvParserException extends RuntimeException{
 
     public CsvParserException(){

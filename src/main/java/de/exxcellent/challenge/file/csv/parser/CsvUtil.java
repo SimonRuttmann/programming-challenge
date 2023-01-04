@@ -1,7 +1,5 @@
 package de.exxcellent.challenge.file.csv.parser;
 
-import de.exxcellent.challenge.file.csv.parser.CsvParserException;
-
 import java.util.List;
 
 public class CsvUtil {

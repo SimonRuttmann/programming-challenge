@@ -9,7 +9,8 @@ import java.util.stream.Collectors;
 public class SmallestGoalSpreadCalculator {
 
     /**
-     * Calculates the minimum of (MxT-MnT) for each DailyWeatherReport and returns the day of this weather report
+     * Calculates the minimum of goal - goals_allowed
+     * for each football team and returns the team with the smallest difference
      */
     public String resolveTeamWithSmallestGoalSpread(FootballTeamCollection footballTeamCollection){
 

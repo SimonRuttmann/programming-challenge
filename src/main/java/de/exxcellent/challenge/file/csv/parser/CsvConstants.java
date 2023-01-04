@@ -1,5 +1,9 @@
 package de.exxcellent.challenge.file.csv.parser;
 
+/**
+ * Class holding all csv schema constants, required by the parsers
+ * @see de.exxcellent.challenge.file.IParser
+ */
 public class CsvConstants {
 
     public static class WeatherConstants{

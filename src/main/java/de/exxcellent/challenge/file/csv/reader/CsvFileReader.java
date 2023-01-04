@@ -7,7 +7,8 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Reads the file
+ * Reads a csv file and creates a CsvContent
+ * @see CsvContent
  */
 public class CsvFileReader {
 

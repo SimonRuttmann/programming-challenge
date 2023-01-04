@@ -6,6 +6,9 @@ import de.exxcellent.challenge.file.csv.reader.CsvContent;
 
 import static de.exxcellent.challenge.file.csv.parser.CsvUtil.getIndexOrThrow;
 
+/**
+ * Implementation of IParser. Contains logic to create a FootballTeamCollection from a csv file
+ */
 public class CsvFootballParser extends AbstractCsvParser<FootballTeamCollection> {
 
     @Override

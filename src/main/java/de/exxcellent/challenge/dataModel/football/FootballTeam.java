@@ -1,5 +1,8 @@
 package de.exxcellent.challenge.dataModel.football;
 
+/**
+ * A pure data class, representing a row in the football.csv file
+ */
 public class FootballTeam {
 
     private final String team;
