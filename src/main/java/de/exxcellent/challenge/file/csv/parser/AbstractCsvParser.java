@@ -1,12 +1,13 @@
 package de.exxcellent.challenge.file.csv.parser;
 
+import de.exxcellent.challenge.dataModel.IDataClass;
 import de.exxcellent.challenge.file.IParser;
 import de.exxcellent.challenge.file.csv.reader.CsvFileReader;
 import de.exxcellent.challenge.file.csv.reader.CsvContent;
 
 import java.io.IOException;
 
-public abstract class AbstractCsvParser<T> implements IParser<T> {
+public abstract class AbstractCsvParser<T extends IDataClass> implements IParser<T> {
 
     @Override
     public T parse(String pathToFile) throws IOException {
