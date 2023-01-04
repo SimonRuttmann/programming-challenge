@@ -1,7 +1,10 @@
 package de.exxcellent.challenge;
 
+import de.exxcellent.challenge.dataModel.DailyWeatherReport;
+import de.exxcellent.challenge.dataModel.MonthlyWeatherReport;
 import de.exxcellent.challenge.file.CsvContent;
 import de.exxcellent.challenge.file.CsvFileReader;
+import de.exxcellent.challenge.file.CsvWeatherParser;
 import de.exxcellent.challenge.file.InvalidCsvFormatException;
 import org.junit.jupiter.api.Test;
 
@@ -36,6 +39,28 @@ class AppTest {
         assertThrows(InvalidCsvFormatException.class,
                 () -> new CsvFileReader().read("src/test/resources/csv/weather_invalid.csv"),
                 "Value on row 2 is missing, but no exception thrown");
+    }
+
+    @Test
+    void CsVMapperTestHappyPath() throws IOException {
+
+        var rawCsvContent = new CsvContent();
+        rawCsvContent.setSchema(schemaWeather);
+        rawCsvContent.addRow(0, firstWeatherRow);
+
+        CsvWeatherParser weatherParserMock = new CsvWeatherParser(){
+            public MonthlyWeatherReport parse(String dummy){
+                return this.mapToClass(rawCsvContent);
+            }
+        };
+
+        var parsedWeatherReport = weatherParserMock.parse("").getDailyWeatherReports().get(0);
+
+        var correctWeatherReport = new DailyWeatherReport(1, 88, 59);
+
+        assertEquals(correctWeatherReport.getDay(), parsedWeatherReport.getDay());
+        assertEquals(correctWeatherReport.getMaxTemperature(), parsedWeatherReport.getMaxTemperature());
+        assertEquals(correctWeatherReport.getMinTemperature(), parsedWeatherReport.getMinTemperature());
     }
 
 }
