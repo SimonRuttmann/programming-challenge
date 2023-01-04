@@ -1,4 +1,4 @@
-package de.exxcellent.challenge.file;
+package de.exxcellent.challenge.file.csv.reader;
 
 import java.io.BufferedReader;
 import java.io.FileReader;

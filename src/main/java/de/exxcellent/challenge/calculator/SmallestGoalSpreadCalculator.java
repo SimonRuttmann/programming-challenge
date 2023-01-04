@@ -1,8 +1,8 @@
-package de.exxcellent.challenge.algorithms;
+package de.exxcellent.challenge.calculator;
 
-import de.exxcellent.challenge.dataModel.FootballTeam;
-import de.exxcellent.challenge.dataModel.FootballTeamCollection;
-import de.exxcellent.challenge.dataModel.MonthlyWeatherReport;
+import de.exxcellent.challenge.algorithms.MinimumDifference;
+import de.exxcellent.challenge.dataModel.football.FootballTeamCollection;
+import de.exxcellent.challenge.toolbox.Pair;
 
 import java.util.stream.Collectors;
 

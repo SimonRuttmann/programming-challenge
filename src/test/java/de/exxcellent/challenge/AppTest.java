@@ -1,14 +1,19 @@
 package de.exxcellent.challenge;
 
 import de.exxcellent.challenge.algorithms.MinimumDifference;
-import de.exxcellent.challenge.algorithms.Pair;
-import de.exxcellent.challenge.algorithms.SmallestGoalSpreadCalculator;
-import de.exxcellent.challenge.algorithms.SmallestTemperatureSpreadCalculator;
-import de.exxcellent.challenge.dataModel.DailyWeatherReport;
-import de.exxcellent.challenge.dataModel.FootballTeam;
-import de.exxcellent.challenge.dataModel.FootballTeamCollection;
-import de.exxcellent.challenge.dataModel.MonthlyWeatherReport;
-import de.exxcellent.challenge.file.*;
+import de.exxcellent.challenge.file.csv.parser.CsvFootballParser;
+import de.exxcellent.challenge.file.csv.parser.CsvParserException;
+import de.exxcellent.challenge.file.csv.parser.CsvWeatherParser;
+import de.exxcellent.challenge.file.csv.reader.CsvContent;
+import de.exxcellent.challenge.file.csv.reader.CsvFileReader;
+import de.exxcellent.challenge.file.csv.reader.InvalidCsvFormatException;
+import de.exxcellent.challenge.toolbox.Pair;
+import de.exxcellent.challenge.calculator.SmallestGoalSpreadCalculator;
+import de.exxcellent.challenge.calculator.SmallestTemperatureSpreadCalculator;
+import de.exxcellent.challenge.dataModel.weather.DailyWeatherReport;
+import de.exxcellent.challenge.dataModel.football.FootballTeam;
+import de.exxcellent.challenge.dataModel.football.FootballTeamCollection;
+import de.exxcellent.challenge.dataModel.weather.MonthlyWeatherReport;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;

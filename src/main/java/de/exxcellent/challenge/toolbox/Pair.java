@@ -1,4 +1,4 @@
-package de.exxcellent.challenge.algorithms;
+package de.exxcellent.challenge.toolbox;
 
 public class Pair<T,N> {
 

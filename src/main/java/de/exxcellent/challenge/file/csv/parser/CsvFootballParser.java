@@ -1,10 +1,10 @@
-package de.exxcellent.challenge.file;
+package de.exxcellent.challenge.file.csv.parser;
 
-import de.exxcellent.challenge.dataModel.DailyWeatherReport;
-import de.exxcellent.challenge.dataModel.FootballTeam;
-import de.exxcellent.challenge.dataModel.FootballTeamCollection;
+import de.exxcellent.challenge.dataModel.football.FootballTeam;
+import de.exxcellent.challenge.dataModel.football.FootballTeamCollection;
+import de.exxcellent.challenge.file.csv.reader.CsvContent;
 
-import static de.exxcellent.challenge.file.CsvUtil.getIndexOrThrow;
+import static de.exxcellent.challenge.file.csv.parser.CsvUtil.getIndexOrThrow;
 
 public class CsvFootballParser extends AbstractCsvParser<FootballTeamCollection> {
 

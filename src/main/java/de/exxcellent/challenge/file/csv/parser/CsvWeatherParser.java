@@ -1,9 +1,10 @@
-package de.exxcellent.challenge.file;
+package de.exxcellent.challenge.file.csv.parser;
 
-import de.exxcellent.challenge.dataModel.DailyWeatherReport;
-import de.exxcellent.challenge.dataModel.MonthlyWeatherReport;
+import de.exxcellent.challenge.dataModel.weather.DailyWeatherReport;
+import de.exxcellent.challenge.dataModel.weather.MonthlyWeatherReport;
+import de.exxcellent.challenge.file.csv.reader.CsvContent;
 
-import static de.exxcellent.challenge.file.CsvUtil.getIndexOrThrow;
+import static de.exxcellent.challenge.file.csv.parser.CsvUtil.getIndexOrThrow;
 
 /**
  * Impl of IParser, uses CsvFileReader

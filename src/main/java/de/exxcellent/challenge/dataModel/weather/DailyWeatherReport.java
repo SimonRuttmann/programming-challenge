@@ -1,4 +1,4 @@
-package de.exxcellent.challenge.dataModel;
+package de.exxcellent.challenge.dataModel.weather;
 
 /**
  * A pure data class, representing a row in the weather.csv file

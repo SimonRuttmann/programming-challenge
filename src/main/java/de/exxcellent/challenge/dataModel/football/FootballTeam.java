@@ -1,4 +1,4 @@
-package de.exxcellent.challenge.dataModel;
+package de.exxcellent.challenge.dataModel.football;
 
 public class FootballTeam {
 

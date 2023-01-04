@@ -1,5 +1,7 @@
 package de.exxcellent.challenge.algorithms;
 
+import de.exxcellent.challenge.toolbox.Pair;
+
 import java.util.List;
 
 

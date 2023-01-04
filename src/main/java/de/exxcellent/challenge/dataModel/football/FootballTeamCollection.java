@@ -1,4 +1,4 @@
-package de.exxcellent.challenge.dataModel;
+package de.exxcellent.challenge.dataModel.football;
 
 import java.util.ArrayList;
 import java.util.List;

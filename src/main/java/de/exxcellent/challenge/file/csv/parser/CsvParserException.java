@@ -1,4 +1,4 @@
-package de.exxcellent.challenge.file;
+package de.exxcellent.challenge.file.csv.parser;
 
 public class CsvParserException extends RuntimeException{
 

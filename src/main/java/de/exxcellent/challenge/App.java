@@ -1,11 +1,11 @@
 package de.exxcellent.challenge;
 
-import de.exxcellent.challenge.algorithms.SmallestGoalSpreadCalculator;
-import de.exxcellent.challenge.algorithms.SmallestTemperatureSpreadCalculator;
-import de.exxcellent.challenge.dataModel.FootballTeamCollection;
-import de.exxcellent.challenge.dataModel.MonthlyWeatherReport;
-import de.exxcellent.challenge.file.CsvFootballParser;
-import de.exxcellent.challenge.file.CsvWeatherParser;
+import de.exxcellent.challenge.calculator.SmallestGoalSpreadCalculator;
+import de.exxcellent.challenge.calculator.SmallestTemperatureSpreadCalculator;
+import de.exxcellent.challenge.dataModel.football.FootballTeamCollection;
+import de.exxcellent.challenge.dataModel.weather.MonthlyWeatherReport;
+import de.exxcellent.challenge.file.csv.parser.CsvFootballParser;
+import de.exxcellent.challenge.file.csv.parser.CsvWeatherParser;
 import de.exxcellent.challenge.file.IParser;
 
 import java.io.IOException;
