@@ -4,7 +4,7 @@ import java.util.List;
 
 public class CsvUtil {
 
-    protected static int getIndexOrTrow(List<String> schema, String value){
+    protected static int getIndexOrThrow(List<String> schema, String value){
 
         var index = schema.indexOf(value);
         if (index == -1){

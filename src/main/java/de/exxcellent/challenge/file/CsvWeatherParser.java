@@ -3,7 +3,7 @@ package de.exxcellent.challenge.file;
 import de.exxcellent.challenge.dataModel.DailyWeatherReport;
 import de.exxcellent.challenge.dataModel.MonthlyWeatherReport;
 
-import static de.exxcellent.challenge.file.CsvUtil.getIndexOrTrow;
+import static de.exxcellent.challenge.file.CsvUtil.getIndexOrThrow;
 
 /**
  * Impl of IParser, uses CsvFileReader
@@ -14,9 +14,9 @@ public class CsvWeatherParser extends AbstractCsvParser<MonthlyWeatherReport> {
 
         var monthlyWeatherReport = new MonthlyWeatherReport();
 
-        var dayIndex = getIndexOrTrow(csvContent.getSchema(), CsvConstants.WeatherConstants.DAY);
-        var maxTempIndex = getIndexOrTrow(csvContent.getSchema(), CsvConstants.WeatherConstants.MAX_TEMPERATURE);
-        var minTempIndex = getIndexOrTrow(csvContent.getSchema(), CsvConstants.WeatherConstants.MIN_TEMPERATURE);
+        var dayIndex = getIndexOrThrow(csvContent.getSchema(), CsvConstants.WeatherConstants.DAY);
+        var maxTempIndex = getIndexOrThrow(csvContent.getSchema(), CsvConstants.WeatherConstants.MAX_TEMPERATURE);
+        var minTempIndex = getIndexOrThrow(csvContent.getSchema(), CsvConstants.WeatherConstants.MIN_TEMPERATURE);
 
         for (var record : csvContent.getRows().entrySet()){
             var day = record.getValue().get(dayIndex);
