@@ -1,7 +1,10 @@
 package de.exxcellent.challenge;
 
+import de.exxcellent.challenge.algorithms.SmallestGoalSpreadCalculator;
 import de.exxcellent.challenge.algorithms.SmallestTemperatureSpreadCalculator;
+import de.exxcellent.challenge.dataModel.FootballTeamCollection;
 import de.exxcellent.challenge.dataModel.MonthlyWeatherReport;
+import de.exxcellent.challenge.file.CsvFootballParser;
 import de.exxcellent.challenge.file.CsvWeatherParser;
 import de.exxcellent.challenge.file.IParser;
 
@@ -24,10 +27,13 @@ public final class App {
         IParser<MonthlyWeatherReport> weatherReportParser = new CsvWeatherParser();
         var weatherReport = weatherReportParser.parse("src/main/resources/de/exxcellent/challenge/weather.csv");
 
+        IParser<FootballTeamCollection> footballTeamParser = new CsvFootballParser();
+        var footballTeams = footballTeamParser.parse("src/main/resources/de/exxcellent/challenge/football.csv");
+
         String dayWithSmallestTempSpread = new SmallestTemperatureSpreadCalculator().resolveDayWithSmallestTemperatureSpread(weatherReport);
         System.out.printf("Day with smallest temperature spread : %s%n", dayWithSmallestTempSpread);
 
-        String teamWithSmallestGoalSpread = "A good team"; // Your goal analysis function call …
+        String teamWithSmallestGoalSpread = new SmallestGoalSpreadCalculator().resolveTeamWithSmallestGoalSpread(footballTeams);
         System.out.printf("Team with smallest goal spread       : %s%n", teamWithSmallestGoalSpread);
     }
 }

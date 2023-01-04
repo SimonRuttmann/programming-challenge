@@ -2,8 +2,11 @@ package de.exxcellent.challenge;
 
 import de.exxcellent.challenge.algorithms.MinimumDifference;
 import de.exxcellent.challenge.algorithms.Pair;
+import de.exxcellent.challenge.algorithms.SmallestGoalSpreadCalculator;
 import de.exxcellent.challenge.algorithms.SmallestTemperatureSpreadCalculator;
 import de.exxcellent.challenge.dataModel.DailyWeatherReport;
+import de.exxcellent.challenge.dataModel.FootballTeam;
+import de.exxcellent.challenge.dataModel.FootballTeamCollection;
 import de.exxcellent.challenge.dataModel.MonthlyWeatherReport;
 import de.exxcellent.challenge.file.*;
 import org.junit.jupiter.api.Test;
@@ -25,6 +28,9 @@ class AppTest {
 
     private final List<String> schemaWeather = Arrays.asList("Day","MxT","MnT","AvT","AvDP","1HrP TPcpn","PDir","AvSp","Dir","MxS","SkyC","MxR","Mn","R AvSLP");
     private final List<String> firstWeatherRow = Arrays.asList("1","88","59","74","53.8","0","280","9.6","270","17","1.6","93","23","1004.5");
+
+    private final List<String> schemaFootball = Arrays.asList("Team","Games","Wins","Losses","Draws","Goals","Goals Allowed","Points");
+    private final List<String> firstFootballRow = Arrays.asList("Arsenal","38","26","9","3","79","36","87");
 
     @Test
     void CsvReaderTestHappyPath() throws IOException {
@@ -61,13 +67,33 @@ class AppTest {
         assertEquals(correctWeatherReport.getDay(), parsedWeatherReport.getDay());
         assertEquals(correctWeatherReport.getMaxTemperature(), parsedWeatherReport.getMaxTemperature());
         assertEquals(correctWeatherReport.getMinTemperature(), parsedWeatherReport.getMinTemperature());
+
+
+        rawCsvContent.setSchema(schemaFootball);
+        rawCsvContent.addRow(0, firstFootballRow);
+
+        CsvFootballParser footballParserMock = new CsvFootballParser(){
+            public FootballTeamCollection parse(String dummy){
+                return this.mapToClass(rawCsvContent);
+            }
+        };
+
+        var parsedFootballTeam = footballParserMock.parse("").getFootballTeams().get(0);
+
+        var correctFootballTeam = new FootballTeam("Arsenal", 79, 36);
+
+        assertEquals(correctFootballTeam.getTeam(), parsedFootballTeam.getTeam());
+        assertEquals(correctFootballTeam.getGoalsAllowed(), parsedFootballTeam.getGoalsAllowed());
+        assertEquals(correctFootballTeam.getGoals(), parsedFootballTeam.getGoals());
     }
 
     @Test
     void CsVMapperTestExceptionPath() {
 
         var rawCsvContent = new CsvContent();
-        var invalidWeatherSchema = schemaWeather.stream().filter(schemaEntry -> schemaEntry.equals("MnT")).collect(Collectors.toList());
+        var invalidWeatherSchema = schemaWeather.stream().
+                filter(schemaEntry -> !schemaEntry.equals("MnT")).
+                collect(Collectors.toList());
 
         rawCsvContent.setSchema(invalidWeatherSchema);
         rawCsvContent.addRow(0, firstWeatherRow);
@@ -79,6 +105,23 @@ class AppTest {
         };
 
         assertThrows(CsvParserException.class, () ->  weatherParserMock.parse(""));
+
+
+        var invalidFootballSchema = schemaFootball.stream().
+                filter(footballSchema -> !footballSchema.equals("Goals Allowed")).
+                collect(Collectors.toList());
+
+        rawCsvContent.setSchema(invalidFootballSchema);
+        rawCsvContent.addRow(0, firstFootballRow);
+
+        CsvFootballParser footballParserMock = new CsvFootballParser(){
+            public FootballTeamCollection parse(String dummy){
+                return this.mapToClass(rawCsvContent);
+            }
+        };
+
+        assertThrows(CsvParserException.class, () ->  footballParserMock.parse(""));
+
     }
 
     @Test
@@ -105,5 +148,17 @@ class AppTest {
 
         var res = new SmallestTemperatureSpreadCalculator().resolveDayWithSmallestTemperatureSpread(weatherReports);
         assertEquals(String.valueOf(2), res);
+    }
+
+    @Test
+    void SmallestGoalSpreadCalculatorTest(){
+
+        var footballTeams = new FootballTeamCollection();
+        footballTeams.addFootballTeam(new FootballTeam("A", 1, 3));
+        footballTeams.addFootballTeam(new FootballTeam("B", 2, 5));
+        footballTeams.addFootballTeam(new FootballTeam("C", 5, 4)); //Diff = 1
+
+        var res = new SmallestGoalSpreadCalculator().resolveTeamWithSmallestGoalSpread(footballTeams);
+        assertEquals("C", res);
     }
 }
