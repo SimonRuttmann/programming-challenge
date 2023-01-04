@@ -11,7 +11,7 @@ import java.util.List;
  */
 public class CsvFileReader {
 
-    private static final String DELIMITER = ";";
+    private static final String DELIMITER = ",";
 
     public CsvContent read(String pathToFile) throws IOException {
         CsvContent fileContent = new CsvContent();
@@ -36,18 +36,19 @@ public class CsvFileReader {
     private void readLines(BufferedReader br, CsvContent currentFileContent) throws IOException {
 
         int amountSchemaFields = currentFileContent.getSchema().size();
-        int row = 0;
 
         String line;
-        while((line = br.readLine()) != null){
+        for(int rowNo = 0; ((line = br.readLine()) != null); rowNo++){
             var splitValues = valuesToList(line);
             var amountValues = splitValues.size();
-            row++;
 
             if(amountValues != amountSchemaFields){
-                throw new InvalidCsvFormatException("Not enough values on this line");
+                throw new InvalidCsvFormatException(String.format(
+                        "The row %s does only have %s values, " +
+                        "but the schema of the file has %s fields",
+                        rowNo, amountValues, amountSchemaFields));
             }
-            currentFileContent.addRow(0, splitValues);
+            currentFileContent.addRow(rowNo, splitValues);
         }
     }
 

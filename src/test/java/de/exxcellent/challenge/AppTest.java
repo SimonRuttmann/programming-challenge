@@ -5,6 +5,8 @@ import de.exxcellent.challenge.file.CsvFileReader;
 import de.exxcellent.challenge.file.InvalidCsvFormatException;
 import org.junit.jupiter.api.Test;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
@@ -23,7 +25,7 @@ class AppTest {
 
     @Test
     void CsvReaderTestHappyPath() throws IOException {
-        var weatherContent = (CsvContent) new CsvFileReader().read("src/test/resouces/csv/weather_valid");
+        var weatherContent = (CsvContent) new CsvFileReader().read("src/test/resources/csv/weather_valid.csv");
 
         assertEquals(weatherContent.getSchema(), schemaWeather, "Schema does not match");
         assertEquals(weatherContent.getRows().get(0), firstWeatherRow);
@@ -32,7 +34,7 @@ class AppTest {
     @Test
     void CsvReaderTestExceptionPath(){
         assertThrows(InvalidCsvFormatException.class,
-                () -> new CsvFileReader().read("src/test/csv/weather_invalid.csv"),
+                () -> new CsvFileReader().read("src/test/resources/csv/weather_invalid.csv"),
                 "Value on row 2 is missing, but no exception thrown");
     }
 
