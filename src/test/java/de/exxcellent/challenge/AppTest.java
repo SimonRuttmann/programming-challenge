@@ -2,17 +2,13 @@ package de.exxcellent.challenge;
 
 import de.exxcellent.challenge.dataModel.DailyWeatherReport;
 import de.exxcellent.challenge.dataModel.MonthlyWeatherReport;
-import de.exxcellent.challenge.file.CsvContent;
-import de.exxcellent.challenge.file.CsvFileReader;
-import de.exxcellent.challenge.file.CsvWeatherParser;
-import de.exxcellent.challenge.file.InvalidCsvFormatException;
+import de.exxcellent.challenge.file.*;
 import org.junit.jupiter.api.Test;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -61,6 +57,24 @@ class AppTest {
         assertEquals(correctWeatherReport.getDay(), parsedWeatherReport.getDay());
         assertEquals(correctWeatherReport.getMaxTemperature(), parsedWeatherReport.getMaxTemperature());
         assertEquals(correctWeatherReport.getMinTemperature(), parsedWeatherReport.getMinTemperature());
+    }
+
+    @Test
+    void CsVMapperTestExceptionPath() {
+
+        var rawCsvContent = new CsvContent();
+        var invalidWeatherSchema = schemaWeather.stream().filter(schemaEntry -> schemaEntry.equals("MnT")).collect(Collectors.toList());
+
+        rawCsvContent.setSchema(invalidWeatherSchema);
+        rawCsvContent.addRow(0, firstWeatherRow);
+
+        CsvWeatherParser weatherParserMock = new CsvWeatherParser(){
+            public MonthlyWeatherReport parse(String dummy){
+                return this.mapToClass(rawCsvContent);
+            }
+        };
+
+        assertThrows(CsvParserException.class, () ->  weatherParserMock.parse(""));
     }
 
 }
