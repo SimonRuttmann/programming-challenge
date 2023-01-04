@@ -1,11 +1,15 @@
 package de.exxcellent.challenge;
 
+import de.exxcellent.challenge.algorithms.MinimumDifference;
+import de.exxcellent.challenge.algorithms.Pair;
+import de.exxcellent.challenge.algorithms.SmallestTemperatureSpreadCalculator;
 import de.exxcellent.challenge.dataModel.DailyWeatherReport;
 import de.exxcellent.challenge.dataModel.MonthlyWeatherReport;
 import de.exxcellent.challenge.file.*;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -77,4 +81,29 @@ class AppTest {
         assertThrows(CsvParserException.class, () ->  weatherParserMock.parse(""));
     }
 
+    @Test
+    void MinimumDifferenceAlgorithmTestHappyPath() {
+        var somePairs =  Arrays.asList(new Pair<>(5.3,8.1f),new Pair<>(1, 2),new Pair<>(1,7.3f));
+        assertEquals(1, new MinimumDifference().calcMinimumDifference(somePairs));
+
+        somePairs =  Arrays.asList(new Pair<>(6.0,6.0),new Pair<>(1,1) ,new Pair<>(1,10));
+        assertEquals(0, new MinimumDifference().calcMinimumDifference(somePairs));
+    }
+
+    @Test
+    void MinimumDifferenceAlgorithmTestExceptionPath(){
+        var emptyPairs = new ArrayList<Pair<Integer, Integer>>();
+        assertThrows(IllegalArgumentException.class, () -> new MinimumDifference().calcMinimumDifference(emptyPairs));
+    }
+
+    @Test
+    void SmallestTemperatureSpreadTest(){
+        var weatherReports = new MonthlyWeatherReport();
+        weatherReports.addDailyWeatherReport(new DailyWeatherReport(1,1,10));
+        weatherReports.addDailyWeatherReport(new DailyWeatherReport(2,2,3)); //Diff = 1
+        weatherReports.addDailyWeatherReport(new DailyWeatherReport(3,3,5));
+
+        var res = new SmallestTemperatureSpreadCalculator().resolveDayWithSmallestTemperatureSpread(weatherReports);
+        assertEquals(String.valueOf(2), res);
+    }
 }

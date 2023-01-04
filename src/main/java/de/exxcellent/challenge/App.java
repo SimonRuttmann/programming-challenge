@@ -1,5 +1,12 @@
 package de.exxcellent.challenge;
 
+import de.exxcellent.challenge.algorithms.SmallestTemperatureSpreadCalculator;
+import de.exxcellent.challenge.dataModel.MonthlyWeatherReport;
+import de.exxcellent.challenge.file.CsvWeatherParser;
+import de.exxcellent.challenge.file.IParser;
+
+import java.io.IOException;
+
 /**
  * The entry class for your solution. This class is only aimed as starting point and not intended as baseline for your software
  * design. Read: create your own classes and packages as appropriate.
@@ -12,19 +19,12 @@ public final class App {
      * This is the main entry method of your program.
      * @param args The CLI arguments passed
      */
-    public static void main(String... args) {
+    public static void main(String... args) throws IOException {
 
-        // Your preparation code …
+        IParser<MonthlyWeatherReport> weatherReportParser = new CsvWeatherParser();
+        var weatherReport = weatherReportParser.parse("src/main/resources/de/exxcellent/challenge/weather.csv");
 
-        /**
-         * IParser p = new CsvWeatherParser("someFile")
-         * Dataclass d = p.parse()
-         *
-         * res = SmallestTempCalc.calc(d)
-         * sout(res)
-         */
-
-        String dayWithSmallestTempSpread = "Someday";     // Your day analysis function call …
+        String dayWithSmallestTempSpread = new SmallestTemperatureSpreadCalculator().resolveDayWithSmallestTemperatureSpread(weatherReport);
         System.out.printf("Day with smallest temperature spread : %s%n", dayWithSmallestTempSpread);
 
         String teamWithSmallestGoalSpread = "A good team"; // Your goal analysis function call …
